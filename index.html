@@ -1,427 +1,796 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Luna di Miele — Jimmy & Juliette • Italy 2027</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        ivory: '#FFFCF5',
-                        forest: '#0F241C',
-                        gold: '#C4A46A',
-                    },
-                    fontFamily: {
-                        playfair: ['Playfair Display', 'serif'],
-                        cormorant: ['Cormorant Garamond', 'serif'],
-                        inter: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html { scroll-behavior: smooth; }
-        body { background: #FFFCF5; color: #0F241C; }
-        .leaflet-container { background: #f5f1e8; font-family: 'Inter', sans-serif; }
-        .leaflet-popup-content-wrapper { background: #FFFCF5; color: #0F241C; border-radius: 8px; box-shadow: 0 8px 24px rgba(15,36,28,0.15); }
-        .leaflet-popup-tip { background: #FFFCF5; }
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #FFFCF5; }
-        ::-webkit-scrollbar-thumb { background: #C4A46A; border-radius: 4px; }
-    </style>
-</head>
-<body class="font-inter antialiased">
-    <!-- Hero -->
-    <header class="relative min-h-[88vh] flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0">
-            <div class="absolute inset-0 bg-gradient-to-b from-ivory via-ivory to-[#F8F3E6]"></div>
-            <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[80%] rounded-full bg-gold/10 blur-[120px]"></div>
-            <div class="absolute bottom-[-30%] right-[-10%] w-[70%] h-[70%] rounded-full bg-gold/15 blur-[100px]"></div>
-            <svg class="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M0 0h100v100H0z" fill="none"/><path d="M20 20l5 5M80 30l-3 7M40 70l6-4M10 90l4 3M90 10l-5 6" stroke="#0F241C" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#grain)"/></svg>
-        </div>
-        
-        <div class="relative z-10 max-w-6xl mx-auto px-6 text-center py-20">
-            <div class="inline-flex items-center gap-2 mb-8">
-                <div class="h-px w-12 bg-gold"></div>
-                <span class="font-cormorant italic text-forest/70 tracking-widest text-lg">Jimmy & Juliette</span>
-                <div class="h-px w-12 bg-gold"></div>
-            </div>
-            
-            <h1 class="font-playfair text-[clamp(3.5rem,10vw,7rem)] leading-[0.9] tracking-tight">
-                La Luna
-                <span class="italic font-medium block md:inline md:ml-4">di Miele</span>
-            </h1>
-            
-            <p class="font-cormorant text-2xl md:text-3xl mt-8 text-forest/80">
-                July 6 – July 26, 2027 • 21 Days • Venice → Naples
-            </p>
-            
-            <div class="flex flex-wrap items-center justify-center gap-3 mt-10">
-                <span class="px-5 py-2.5 rounded-full border border-gold/40 bg-white/60 backdrop-blur-sm text-sm font-medium tracking-wide shadow-sm">
-                    <span class="text-gold mr-2">✦</span> 2 days after wedding
-                </span>
-                <span class="px-5 py-2.5 rounded-full border border-gold/40 bg-white/60 backdrop-blur-sm text-sm font-medium tracking-wide shadow-sm">
-                    <span class="text-gold mr-2">✈</span> Depart NAP
-                </span>
-                <span class="px-5 py-2.5 rounded-full bg-forest text-ivory text-sm font-medium tracking-wide shadow-sm">
-                    Early July Edition
-                </span>
-            </div>
-
-            <div class="mt-16 flex justify-center">
-                <a href="#itinerary" class="group inline-flex items-center gap-3 text-sm uppercase tracking-[0.2em] font-medium hover:text-gold transition-colors">
-                    Explore the journey
-                    <span class="w-8 h-8 rounded-full border border-forest/20 flex items-center justify-center group-hover:border-gold group-hover:translate-y-0.5 transition-all">↓</span>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Overview -->
-    <section class="max-w-6xl mx-auto px-6 py-16 md:py-24">
-        <div class="grid lg:grid-cols-12 gap-12 items-start">
-            <div class="lg:col-span-5">
-                <h2 class="font-playfair text-4xl md:text-5xl leading-tight">An early summer honeymoon, perfectly timed.</h2>
-                <div class="h-1 w-20 bg-gold mt-6"></div>
-            </div>
-            <div class="lg:col-span-7 font-inter text-[17px] leading-relaxed text-forest/85 space-y-5">
-                <p>This itinerary departs <strong>Tuesday, July 6</strong> — just two days after your July 3rd wedding — for 21 unhurried days through northern and central Italy.</p>
-                
-                
-            </div>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mt-16">
-            <div class="bg-white/70 backdrop-blur border border-gold/20 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-                <div class="text-gold text-2xl mb-3">⌖</div>
-                <h3 class="font-cormorant text-xl font-semibold mb-2">Florence, Curated</h3>
-                <p class="text-sm text-forest/75 leading-relaxed">Limited to essentials only: Duomo, Uffizi, Ponte Vecchio, Accademia (David), and Santa Croce.</p>
-            </div>
-            <div class="bg-white/70 backdrop-blur border border-gold/20 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-                <div class="text-gold text-2xl mb-3">⚓</div>
-                <h3 class="font-cormorant text-xl font-semibold mb-2">Islands & Coasts</h3>
-                <p class="text-sm text-forest/75 leading-relaxed">Ravenna mosaics, San Marino towers, and <strong>one night on Elba</strong> (Napoleon's villas).</p>
-            </div>
-            <div class="bg-white/70 backdrop-blur border border-gold/20 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-                <div class="text-gold text-2xl mb-3">✦</div>
-                <h3 class="font-cormorant text-xl font-semibold mb-2">Historic Stops</h3>
-                <p class="text-sm text-forest/75 leading-relaxed">Cross the Rubicon at Savignano sul Rubicone, overnight in San Marino, day-stop in Assisi.</p>
-            </div>
-            <div class="bg-white/70 backdrop-blur border border-gold/20 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-                <div class="text-gold text-2xl mb-3">⊕</div>
-                <h3 class="font-cormorant text-xl font-semibold mb-2">Rome & South</h3>
-                <p class="text-sm text-forest/75 leading-relaxed">Five full days in Rome, then Naples & Pompeii first, ending with four relaxing nights in Praiano (Amalfi Coast) and Capri.</p>
-            </div>
-        </div>
-    </section>
-
-
-        <div class="grid md:grid-cols-2 gap-6 mt-16">
-            <div class="bg-white border border-gold/25 rounded-2xl p-8 shadow-sm">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-full bg-forest text-ivory flex items-center justify-center">✝</div>
-                    <h3 class="font-playfair text-2xl">Pilgrimage</h3>
-                </div>
-                <p class="text-[15px] text-forest/80 leading-relaxed mb-4">Your route follows Italy's great pilgrim roads.</p>
-                <ul class="space-y-3 text-[15px] text-forest/85">
-                    <li><strong>Venice:</strong> St Mark's Basilica with the relics of the Evangelist; Torcello's Santa Maria Assunta mosaics.</li>
-                    <li><strong>Ravenna:</strong> San Vitale, Galla Placidia – early Christian mosaics.</li>
-                    <li><strong>Assisi:</strong> Basilica of St Francis – Upper and Lower churches, tomb of Il Poverello.</li>
-                    <li><strong>Rome:</strong> The four major papal basilicas – St Mary Major, St Peter's (Sunday Angelus), St John Lateran with the Scala Santa, St Paul Outside the Walls. Plus San Clemente and the Catacombs of San Callisto.</li>
-                    <li><strong>Amalfi:</strong> Duomo di Sant'Andrea – crypt holding relics of St Andrew the Apostle.</li>
-                </ul>
-            </div>
-            <div class="bg-white border border-gold/25 rounded-2xl p-8 shadow-sm">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-full bg-gold text-forest flex items-center justify-center">⌛</div>
-                    <h3 class="font-playfair text-2xl">History</h3>
-                </div>
-                <p class="text-[15px] text-forest/80 leading-relaxed mb-4">From empire to republic to exile.</p>
-                <ul class="space-y-3 text-[15px] text-forest/85">
-                    <li><strong>Roman foundations:</strong> Cross the Rubicon at Savignano, walk Pompeii's streets, Rome's Colosseum, Forum, Palatine, Pantheon, and Appian Way.</li>
-                    <li><strong>Byzantine Ravenna:</strong> San Vitale's Justinian and Theodora mosaics, Galla Placidia's starry mausoleum.</li>
-                    <li><strong>Medieval communes:</strong> San Marino's Three Towers, Florence's Duomo, Uffizi, and Santa Croce, Pisa's Leaning Tower.</li>
-                    <li><strong>Modern exile:</strong> Elba – Napoleon's Villa dei Mulini and Villa San Martino.</li>
-                </ul>
-            </div>
-        </div>
-
-    <!-- Map -->
-    <section class="max-w-6xl mx-auto px-6 pb-8">
-        <div class="flex items-end justify-between mb-6">
-            <div>
-                <h2 class="font-playfair text-3xl md:text-4xl">The Route</h2>
-                <p class="font-cormorant italic text-lg text-forest/70 mt-1">Venezia to Napoli, via the heart of Italy</p>
-            </div>
-            <div class="hidden md:flex items-center gap-2 text-xs text-forest/60">
-                <span class="w-3 h-3 rounded-full bg-gold"></span> 15 stops • 1,100km
-            </div>
-        </div>
-        <div class="relative rounded-[24px] overflow-hidden border border-gold/30 shadow-xl">
-            <div id="map" class="w-full h-[480px] md:h-[600px]"></div>
-            <div class="absolute bottom-4 left-4 bg-ivory/90 backdrop-blur px-4 py-2 rounded-lg text-xs border border-gold/20 shadow">
-                Car throughout • Ferry to Elba
-            </div>
-        </div>
-    </section>
-
-    <!-- Calendar -->
-    <section id="itinerary" class="max-w-6xl mx-auto px-6 py-16 md:py-24">
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
-            <div>
-                <h2 class="font-playfair text-4xl md:text-5xl">Calendar</h2>
-                <p class="text-forest/70 mt-2">All dates verified for 2027 • Tap any day for details</p>
-            </div>
-            <div class="flex gap-3">
-                <div class="px-4 py-2 rounded-full bg-white border border-gold/30 text-sm">
-                    <span class="font-medium">Open-jaw:</span> VCE in / NAP out
-                </div>
-                <div class="px-4 py-2 rounded-full bg-white border border-gold/30 text-sm">
-                    <span class="font-medium">Car:</span> Jul 9–26
-                </div>
-            </div>
-        </div>
-
-        <div class="overflow-hidden rounded-2xl border border-gold/25 bg-white/60 backdrop-blur shadow-sm">
-            <div class="overflow-x-auto">
-                <table class="w-full text-[15px]">
-                    <thead class="bg-forest text-ivory/95 font-medium text-[13px] uppercase tracking-wider">
-                        <tr>
-                            <th class="text-left py-3.5 px-5 w-[110px]">Date</th>
-                            <th class="text-left py-3.5 px-3 w-[60px]">Day</th>
-                            <th class="text-left py-3.5 px-5 w-[140px]">Base</th>
-                            <th class="text-left py-3.5 px-5">Plan</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gold/15">
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium whitespace-nowrap">July 6</td>
-                            <td class="py-4 px-3 text-forest/60">Tue</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Venice</td>
-                            <td class="py-4 px-5">Arrive VCE, vaporetto, cicchetti</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 7</td>
-                            <td class="py-4 px-3 text-forest/60">Wed</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Venice</td>
-                            <td class="py-4 px-5">St Mark's Basilica, Doge's Palace</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 8</td>
-                            <td class="py-4 px-3 text-forest/60">Thu</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Venice</td>
-                            <td class="py-4 px-5">Murano/Burano/Torcello mosaics</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 9</td>
-                            <td class="py-4 px-3 text-forest/60">Fri</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Ravenna</td>
-                            <td class="py-4 px-5"><strong>Pick up car Venice Mestre</strong>, drive to Ravenna, San Vitale, Galla Placidia</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 10</td>
-                            <td class="py-4 px-3 text-forest/60">Sat</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">San Marino</td>
-                            <td class="py-4 px-5">Drive to Savignano sul Rubicone (Rubicon), afternoon San Marino Three Towers</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 11</td>
-                            <td class="py-4 px-3 text-forest/60">Sun</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Florence</td>
-                            <td class="py-4 px-5">Drive via Apennines, park outside ZTL, Duomo sunset</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 12</td>
-                            <td class="py-4 px-3 text-forest/60">Mon</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Florence</td>
-                            <td class="py-4 px-5">Uffizi Gallery 8:15, Ponte Vecchio</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 13</td>
-                            <td class="py-4 px-3 text-forest/60">Tue</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Florence</td>
-                            <td class="py-4 px-5">Galleria dell'Accademia (David), Basilica di Santa Croce</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 14</td>
-                            <td class="py-4 px-3 text-forest/60">Wed</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Elba</td>
-                            <td class="py-4 px-5">Morning Pisa Tower, drive to Piombino, <strong>ferry with car</strong> to Portoferraio, Villa dei Mulini</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 15</td>
-                            <td class="py-4 px-3 text-forest/60">Thu</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Orvieto</td>
-                            <td class="py-4 px-5">Villa San Martino, ferry back, drive to Assisi (St Francis), continue to Orvieto</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 16</td>
-                            <td class="py-4 px-3 text-forest/60">Fri</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Rome</td>
-                            <td class="py-4 px-5">Drive to Rome, park, afternoon Trastevere, St Mary Major</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 17</td>
-                            <td class="py-4 px-3 text-forest/60">Sat</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Rome</td>
-                            <td class="py-4 px-5">Colosseum Underground, Forum, Palatine, San Clemente</td>
-                        </tr>
-                        <tr class="bg-[#E8F4EA] border-l-4 border-l-[#2E7D32] hover:bg-[#DFF0E3] transition">
-                            <td class="py-4 px-5 font-medium">July 18</td>
-                            <td class="py-4 px-3 text-forest/70 font-semibold">Sun</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px] font-semibold">Rome</td>
-                            <td class="py-4 px-5"><span class="inline-flex items-center gap-2 font-medium"><span class="w-2 h-2 rounded-full bg-[#2E7D32]"></span> St Peter's Basilica, <span class="text-[#2E7D32] uppercase tracking-wide text-[12px] font-semibold">ANGELUS 12:00</span>, St John Lateran & Scala Santa</span></td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 19</td>
-                            <td class="py-4 px-3 text-forest/60">Mon</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Rome</td>
-                            <td class="py-4 px-5">Vatican Museums, Sistine, Borghese Gallery, Pantheon</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 20</td>
-                            <td class="py-4 px-3 text-forest/60">Tue</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Rome</td>
-                            <td class="py-4 px-5">St Paul Outside the Walls, Catacombs, Appian Way</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 21</td>
-                            <td class="py-4 px-3 text-forest/60">Wed</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Naples</td>
-                            <td class="py-4 px-5"><strong>Drive Rome → Naples</strong>, Spaccanapoli, historic pizza</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 22</td>
-                            <td class="py-4 px-3 text-forest/60">Thu</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Praiano</td>
-                            <td class="py-4 px-5">Morning <strong>Pompeii</strong> tour, drive Amalfi Coast to Praiano via Sorrento, check in</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 23</td>
-                            <td class="py-4 px-3 text-forest/60">Fri</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Praiano</td>
-                            <td class="py-4 px-5">Amalfi Duomo, Ravello Villa Rufolo, slow lunch</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 24</td>
-                            <td class="py-4 px-3 text-forest/60">Sat</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Praiano</td>
-                            <td class="py-4 px-5">Capri day trip: ferry from Amalfi, Blue Grotto, Villa Jovis</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 25</td>
-                            <td class="py-4 px-3 text-forest/60">Sun</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Praiano</td>
-                            <td class="py-4 px-5">Positano beach, free afternoon, final honeymoon dinner</td>
-                        </tr>
-                        <tr class="hover:bg-gold/5 transition">
-                            <td class="py-4 px-5 font-medium">July 26</td>
-                            <td class="py-4 px-3 text-forest/60">Mon</td>
-                            <td class="py-4 px-5 font-cormorant text-[19px]">Departure</td>
-                            <td class="py-4 px-5">Morning coffee, <strong>drive to NAP, drop car</strong>, flight home</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Notes -->
-        <div class="grid md:grid-cols-3 gap-6 mt-12">
-            <div class="md:col-span-2 bg-white border-gold/25 rounded-2xl p-6">
-                <h3 class="font-playfair text-xl mb-3">Key Logistics</h3>
-                <ul class="space-y-2.5 text-[15px] text-forest/85">
-                    <li class="flex gap-3"><span class="text-gold mt-0.5">✈</span><span><strong>Open-jaw flights:</strong> into Venice Marco Polo (VCE), out of Naples International (NAP)</span></li>
-                    <li class="flex gap-3"><span class="text-gold mt-0.5">🚗</span><span><strong>Car rental:</strong> July 9 pickup Venice Mestre, July 26 drop Naples Airport (drive the entire peninsula, includes Elba ferry; park outside ZTLs in Florence & Rome)</span></li>
-                    <li class="flex gap-3"><span class="text-gold mt-0.5">⛪</span><span><strong>July in Rome:</strong> General Audience suspended; Sunday Angelus included July 18 at 12:00</span></li>
-                </ul>
-            </div>
-            <div class="bg-forest text-ivory rounded-2xl p-6 flex flex-col justify-between">
-                <div>
-                    <h3 class="font-cormorant text-2xl italic">All major sites covered</h3>
-                    <p class="text-sm text-ivory/75 mt-2 leading-relaxed">Venice, Ravenna, San Marino, Florence, Pisa, Elba, Assisi, Orvieto, Rome, Naples, Pompeii, Amalfi, Capri.</p>
-                </div>
-                <div class="mt-6 text-xs uppercase tracking-widest text-gold">21 days • 2 travelers • 1 honeymoon</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="border-t border-gold/20 mt-8">
-        <div class="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="text-center md:text-left">
-                <p class="font-playfair text-2xl">Jimmy & Juliette</p>
-                <p class="font-cormorant italic text-forest/70 mt-1">La Luna di Miele — July 6–26, 2027</p>
-            </div>
-            <div class="flex items-center gap-4 text-sm text-forest/60">
-                <span>Venezia</span>
-                <span class="text-gold">→</span>
-                <span>Roma</span>
-                <span class="text-gold">→</span>
-                <span>Napoli</span>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Leaflet Map
-        const stops = [
-            { name: "Venice", coords: [45.4408, 12.3155], date: "Jul 6-9" },
-            { name: "Ravenna", coords: [44.4184, 12.2035], date: "Jul 9" },
-            { name: "Savignano sul Rubicone", coords: [44.0890, 12.3967], date: "Jul 10" },
-            { name: "San Marino", coords: [43.9333, 12.4473], date: "Jul 10" },
-            { name: "Florence", coords: [43.7696, 11.2558], date: "Jul 11-14" },
-            { name: "Pisa", coords: [43.7228, 10.3966], date: "Jul 14" },
-            { name: "Piombino", coords: [42.9254, 10.5259], date: "Jul 14" },
-            { name: "Portoferraio (Elba)", coords: [42.8075, 10.3280], date: "Jul 14" },
-            { name: "Orvieto", coords: [42.7181, 12.1135], date: "Jul 15" },
-            { name: "Rome", coords: [41.9028, 12.4964], date: "Jul 16-21" },
-            { name: "Naples", coords: [40.8518, 14.2681], date: "Jul 21" },
-            { name: "Pompeii", coords: [40.7489, 14.4918], date: "Jul 22" },
-            { name: "Praiano (Amalfi Coast)", coords: [40.6476, 14.5349], date: "Jul 22-26" },
-            { name: "Capri", coords: [40.5509, 14.2222], date: "Jul 24" },
-            { name: "Naples Departure", coords: [40.8518, 14.2681], date: "Jul 26" },
-        ];
-
-        const map = L.map('map', { scrollWheelZoom: false, zoomControl: true }).setView([42.8, 12.5], 6);
-
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO',
-            maxZoom: 19
-        }).addTo(map);
-
-        const goldIcon = (num) => L.divIcon({
-            html: `<div style="background:#C4A46A;color:#0F241C;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Inter;font-weight:600;font-size:12px;border:2px solid #FFFCF5;box-shadow:0 2px 8px rgba(0,0,0,0.25)">${num}</div>`,
-            className: '',
-            iconSize: [28, 28],
-            iconAnchor: [14, 14]
-        });
-
-        const latlngs = [];
-        stops.forEach((stop, i) => {
-            latlngs.push(stop.coords);
-            const marker = L.marker(stop.coords, { icon: goldIcon(i+1) }).addTo(map);
-            marker.bindPopup(`<div style="font-family:'Cormorant Garamond',serif;font-size:18px;margin-bottom:2px">${stop.name}</div><div style="font-size:12px;color:#0F241C99">${stop.date}</div>`);
-        });
-
-        const polyline = L.polyline(latlngs, {
-            color: '#C4A46A',
-            weight: 3,
-            opacity: 0.85,
-            lineJoin: 'round',
-            dashArray: '8 6'
-        }).addTo(map);
-
-        map.fitBounds(polyline.getBounds().pad(0.15));
-    </script>
-</body>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   La Luna di Miele &mdash; Jimmy &amp; Juliette &bull; Italy 2027
+  </title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet">
+   <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+   </script>
+   <script>
+    tailwind.config = { theme: { extend: { colors: { ivory: '#FFFCF5', forest: '#0F241C', gold: '#C4A46A', }, fontFamily: {
+playfair: ['Playfair Display', 'serif'],
+cormorant: ['Cormorant Garamond', 'serif'],
+inter: ['Inter', 'sans-serif'], }, }, }, }
+   </script>
+   <style>
+    html { scroll-behavior: smooth; }
+body { background: #FFFCF5; color: #0F241C; }
+.leaflet-container { background: #f5f1e8; font-family: 'Inter', sans-serif; }
+.leaflet-popup-content-wrapper { background: #FFFCF5; color: #0F241C; border-radius: 8px; box-shadow: 0 8px 24px rgba(15,36,28,0.15); }
+.leaflet-popup-tip { background: #FFFCF5; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #FFFCF5; }
+::-webkit-scrollbar-thumb { background: #C4A46A; border-radius: 4px; }
+   </style>
+  </link>
+ </head>
+ <body class="font-inter antialiased">
+  <div class="absolute inset-0">
+   <div class="absolute inset-0 bg-gradient-to-b from-ivory via-ivory to-[#F8F3E6]">
+   </div>
+   <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[80%] rounded-full bg-gold/10 blur-[120px]">
+   </div>
+   <div class="absolute bottom-[-30%] right-[-10%] w-[70%] h-[70%] rounded-full bg-gold/15 blur-[100px]">
+   </div>
+   <svg class="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+     <pattern height="100" id="grain" patternunits="userSpaceOnUse" width="100">
+      <path d="M0 0h100v100H0z" fill="none">
+      </path>
+      <path d="M20 20l5 5M80 30l-3 7M40 70l6-4M10 90l4 3M90 10l-5 6" stroke="#0F241C" stroke-width="0.5">
+      </path>
+     </pattern>
+    </defs>
+    <rect fill="url(#grain)" height="100%" width="100%">
+    </rect>
+   </svg>
+  </div>
+  <div class="relative z-10 max-w-6xl mx-auto px-6 text-center py-20">
+   <div class="inline-flex items-center gap-2 mb-8">
+    <div class="h-px w-12 bg-gold">
+    </div>
+    <span class="font-cormorant italic text-forest/70 tracking-widest text-lg">
+     Jimmy &amp; Juliette
+    </span>
+    <div class="h-px w-12 bg-gold">
+    </div>
+   </div>
+   <h1 class="font-playfair text-[clamp(3.5rem,10vw,7rem)] leading-[0.9] tracking-tight">
+    La Luna
+    <span class="italic font-medium block md:inline md:ml-4">
+     di Miele
+    </span>
+   </h1>
+   <p class="font-cormorant text-2xl md:text-3xl mt-8 text-forest/80">
+    July 6 &ndash; July 26, 2027 &bull; 21 Days &bull; Venice &rarr; Naples
+   </p>
+   <div class="flex flex-wrap items-center justify-center gap-3 mt-10">
+    <span class="px-5 py-2.5 rounded-full border border-gold/40 bg-white/60 backdrop-blur-sm text-sm font-medium tracking-wide shadow-sm">
+     <span class="text-gold mr-2">
+      ✦
+     </span>
+     2 days after wedding
+    </span>
+    <span class="px-5 py-2.5 rounded-full border border-gold/40 bg-white/60 backdrop-blur-sm text-sm font-medium tracking-wide shadow-sm">
+     <span class="text-gold mr-2">
+      ✈
+     </span>
+     Depart NAP
+    </span>
+    <span class="px-5 py-2.5 rounded-full bg-forest text-ivory text-sm font-medium tracking-wide shadow-sm">
+     Early July Edition
+    </span>
+   </div>
+   <div class="mt-16 flex justify-center">
+    <a class="group inline-flex items-center gap-3 text-sm uppercase tracking-[0.2em] font-medium hover:text-gold transition-colors" href="#itinerary">
+     Explore the journey
+     <span class="w-8 h-8 rounded-full border border-forest/20 flex items-center justify-center group-hover:border-gold group-hover:translate-y-0.5 transition-all">
+      &darr;
+     </span>
+    </a>
+   </div>
+  </div>
+  <!-- Overview -->
+  <section class="max-w-6xl mx-auto px-6 py-16 md:py-24">
+   <div class="grid lg:grid-cols-12 gap-12 items-start">
+    <div class="lg:col-span-5">
+     <h2 class="font-playfair text-4xl md:text-5xl leading-tight">
+      An early summer honeymoon, perfectly timed.
+     </h2>
+     <div class="h-1 w-20 bg-gold mt-6">
+     </div>
+    </div>
+    <div class="lg:col-span-7 font-inter text-[17px] leading-relaxed text-forest/85 space-y-5">
+     <p>
+      This itinerary departs
+      <strong>
+       Tuesday, July 6
+      </strong>
+      &mdash; just two days after your July 3rd wedding &mdash; for 21 unhurried days through northern and central 
+Italy.
+     </p>
+    </div>
+   </div>
+   <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mt-16">
+    <div class="bg-white/70 backdrop-blur border border-gold/20 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+     <div class="text-gold text-2xl mb-3">
+      &target;
+     </div>
+     <h3 class="font-cormorant text-xl font-semibold mb-2">
+      Florence, Curated
+     </h3>
+     <p class="text-sm text-forest/75 leading-relaxed">
+      Limited to essentials only: Duomo, Uffizi, Ponte Vecchio, Accademia (David), and Santa Croce.
+     </p>
+    </div>
+    <div class="bg-white/70 backdrop-blur border border-gold/20 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+     <div class="text-gold text-2xl mb-3">
+      ⚓
+     </div>
+     <h3 class="font-cormorant text-xl font-semibold mb-2">
+      Islands &amp; Coasts
+     </h3>
+     <p class="text-sm text-forest/75 leading-relaxed">
+      Ravenna mosaics, San Marino towers, and
+      <strong>
+       overnight on Elba
+      </strong>
+      (Napoleon's villas).
+     </p>
+    </div>
+    <div class="bg-white/70 backdrop-blur border border-gold/20 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+     <div class="text-gold text-2xl mb-3">
+      ✦
+     </div>
+     <h3 class="font-cormorant text-xl font-semibold mb-2">
+      Historic Stops
+     </h3>
+     <p class="text-sm text-forest/75 leading-relaxed">
+      Bologna's university, cross the Rubicon at Savignano sul Rubicone, overnight in San Marino, day-stop in Assisi.
+     </p>
+    </div>
+    <div class="bg-white/70 backdrop-blur border border-gold/20 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+     <div class="text-gold text-2xl mb-3">
+      &oplus;
+     </div>
+     <h3 class="font-cormorant text-xl font-semibold mb-2">
+      Rome &amp; South
+     </h3>
+     <p class="text-sm text-forest/75 leading-relaxed">
+      Five full days in Rome, then Pompeii first, ending with four relaxing nights in Praiano (Amalfi 
+Coast) and Capri.
+     </p>
+    </div>
+   </div>
+   <div class="grid md:grid-cols-2 gap-6 mt-16">
+    <div class="bg-white border border-gold/25 rounded-2xl p-8 shadow-sm">
+     <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-full bg-forest text-ivory flex items-center justify-center">
+       ✝
+      </div>
+      <h3 class="font-playfair text-2xl">
+       Pilgrimage
+      </h3>
+     </div>
+     <p class="text-[15px] text-forest/80 leading-relaxed mb-4">
+      Your route follows Italy's great pilgrim roads.
+     </p>
+     <ul class="space-y-3 text-[15px] text-forest/85">
+      <li>
+       <strong>
+        Venice:
+       </strong>
+       St Mark's Basilica with the relics of the Evangelist; Torcello's Santa Maria Assunta mosaics.
+      </li>
+      <li>
+       <strong>
+        Ravenna:
+       </strong>
+       San Vitale, Galla Placidia &ndash; early Christian mosaics.
+      </li>
+      <li>
+       <strong>
+        Assisi:
+       </strong>
+       Basilica of St Francis &ndash; Upper and Lower churches, tomb of Il Poverello.
+      </li>
+      <li>
+       <strong>
+        Rome:
+       </strong>
+       The four major papal basilicas &ndash; St Mary Major, St Peter's (Sunday Angelus), St John Lateran with the Scala Santa, St Paul Outside 
+the Walls. Plus San Clemente and the Catacombs of San Callisto.
+      </li>
+      <li>
+       <strong>
+        Amalfi:
+       </strong>
+       Duomo di Sant'Andrea &ndash; crypt holding relics of St Andrew the Apostle.
+      </li>
+     </ul>
+    </div>
+    <div class="bg-white border border-gold/25 rounded-2xl p-8 shadow-sm">
+     <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-full bg-gold text-forest flex items-center justify-center">
+       ⌛
+      </div>
+      <h3 class="font-playfair text-2xl">
+       History
+      </h3>
+     </div>
+     <p class="text-[15px] text-forest/80 leading-relaxed mb-4">
+      From empire to republic to exile.
+     </p>
+     <ul class="space-y-3 text-[15px] text-forest/85">
+      <li>
+       <strong>
+        Roman foundations:
+       </strong>
+       Cross the Rubicon at Savignano, walk Pompeii's streets, Rome's Colosseum, Forum, Palatine, Pantheon, and Appian 
+Way.
+      </li>
+      <li>
+       <strong>
+        Byzantine Ravenna:
+       </strong>
+       San Vitale's Justinian and Theodora mosaics, Galla Placidia's starry mausoleum.
+      </li>
+      <li>
+       <strong>
+        Medieval communes:
+       </strong>
+       Bologna's Archiginnasio, San Marino's Three Towers, Florence's Duomo, Uffizi, and Santa Croce, Pisa's Leaning Tower.
+      </li>
+      <li>
+       <strong>
+        Modern exile:
+       </strong>
+       Elba &ndash; Napoleon's Villa dei Mulini and Villa San Martino.
+      </li>
+     </ul>
+    </div>
+   </div>
+  </section>
+  <!-- Map -->
+  <section class="max-w-6xl mx-auto px-6 pb-8">
+   <div class="flex items-end justify-between mb-6">
+    <div>
+     <h2 class="font-playfair text-3xl md:text-4xl">
+      The Route
+     </h2>
+     <p class="font-cormorant italic text-lg text-forest/70 mt-1">
+      Venezia to Napoli, via the heart of Italy
+     </p>
+    </div>
+    <div class="hidden md:flex items-center gap-2 text-xs text-forest/60">
+     <span class="w-3 h-3 rounded-full bg-gold">
+     </span>
+     15 stops &bull; 1,100km
+    </div>
+   </div>
+   <div class="relative rounded-[24px] overflow-hidden border border-gold/30 shadow-xl">
+    <div class="w-full h-[480px] md:h-[600px]" id="map">
+    </div>
+    <div class="absolute bottom-4 left-4 bg-ivory/90 backdrop-blur px-4 py-2 rounded-lg text-xs border border-gold/20 shadow">
+     Trains + 2 short rentals &bull; Ferry to Elba
+    </div>
+   </div>
+  </section>
+  <!-- Calendar -->
+  <section class="max-w-6xl mx-auto px-6 py-16 md:py-24" id="itinerary">
+   <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+    <div>
+     <h2 class="font-playfair text-4xl md:text-5xl">
+      Calendar
+     </h2>
+     <p class="text-forest/70 mt-2">
+      All dates verified for 2027 &bull; Tap any day for details
+     </p>
+    </div>
+    <div class="flex gap-3">
+     <div class="px-4 py-2 rounded-full bg-white border border-gold/30 text-sm">
+      <span class="font-medium">
+       Open-jaw:
+      </span>
+      VCE in / NAP out
+     </div>
+     <div class="px-4 py-2 rounded-full bg-white border border-gold/30 text-sm">
+      <span class="font-medium">
+       Car:
+      </span>
+      2 rentals (Jul 10-11, Jul 14-15)
+     </div>
+    </div>
+   </div>
+   <div class="overflow-hidden rounded-2xl border border-gold/25 bg-white/60 backdrop-blur shadow-sm">
+    <div class="overflow-x-auto">
+     <table class="w-full text-[15px]">
+      <thead class="bg-forest text-ivory/95 font-medium text-[13px] uppercase tracking-wider">
+       <tr>
+        <th class="text-left py-3.5 px-5 w-[110px]">
+         Date
+        </th>
+        <th class="text-left py-3.5 px-3 w-[60px]">
+         Day
+        </th>
+        <th class="text-left py-3.5 px-5 w-[140px]">
+         Base
+        </th>
+        <th class="text-left py-3.5 px-5">
+         Plan
+        </th>
+       </tr>
+      </thead>
+      <tbody class="divide-y divide-gold/15">
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium whitespace-nowrap">
+         July 6
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Tue
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Venice
+        </td>
+        <td class="py-4 px-5">
+         Arrive VCE, vaporetto, cicchetti
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 7
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Wed
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Venice
+        </td>
+        <td class="py-4 px-5">
+         St Mark's Basilica, Doge's Palace
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 8
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Thu
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Venice
+        </td>
+        <td class="py-4 px-5">
+         Murano/Burano/Torcello mosaics
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 9
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Fri
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Ravenna
+        </td>
+        <td class="py-4 px-5">
+         Train to Bologna (store bags at Centrale), San Domenico &amp; Archiginnasio, train to Ravenna, San Vitale
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 10
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Sat
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         San Marino
+        </td>
+        <td class="py-4 px-5">
+         <strong>
+          Pick up car Ravenna 09:00
+         </strong>
+         , drive to Savignano sul Rubicone (Rubicon), afternoon San Marino Three Towers
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 11
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Sun
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Florence
+        </td>
+        <td class="py-4 px-5">
+         Drive via Apennines,
+         <strong>
+          drop car Florence Airport 17:00
+         </strong>
+         , Duomo sunset
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 12
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Mon
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Florence
+        </td>
+        <td class="py-4 px-5">
+         Uffizi Gallery 8:15, Ponte Vecchio
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 13
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Tue
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Florence
+        </td>
+        <td class="py-4 px-5">
+         Galleria dell'Accademia (David), Basilica di Santa Croce
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 14
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Wed
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Elba
+        </td>
+        <td class="py-4 px-5">
+         <strong>
+          Pick up car Florence Airport 07:00
+         </strong>
+         , Pisa Tower, drive to Piombino, park at G.M.A. garage overnight,
+         <strong>
+          ferry to Elba (foot)
+         </strong>
+         , check in Portoferraio, Villa dei Mulini
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 15
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Thu
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Orvieto
+        </td>
+        <td class="py-4 px-5">
+         Villa San Martino morning, ferry back to Piombino, retrieve car, drive to Assisi (St Francis), continue to Orvieto,
+         <strong>
+          drop car 18:00
+         </strong>
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 16
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Fri
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Rome
+        </td>
+        <td class="py-4 px-5">
+         Train Orvieto &rarr; Rome, Trastevere, St Mary Major
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 17
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Sat
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Rome
+        </td>
+        <td class="py-4 px-5">
+         Colosseum Underground, Forum, Palatine, San Clemente
+        </td>
+       </tr>
+       <tr class="bg-[#E8F4EA] border-l-4 border-l-[#2E7D32] hover:bg-[#DFF0E3] transition">
+        <td class="py-4 px-5 font-medium">
+         July 18
+        </td>
+        <td class="py-4 px-3 text-forest/70 font-semibold">
+         Sun
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px] font-semibold">
+         Rome
+        </td>
+        <td class="py-4 px-5">
+         <span class="inline-flex items-center gap-2 font-medium">
+          <span class="w-2 h-2 rounded-full bg-[#2E7D32]">
+          </span>
+          St Peter's Basilica,
+          <span class="text-[#2E7D32] uppercase tracking-wide text-[12px] font-semibold">
+           ANGELUS 12:00
+          </span>
+          , St John Lateran &amp; Scala Santa
+         </span>
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 19
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Mon
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Rome
+        </td>
+        <td class="py-4 px-5">
+         Vatican Museums, Sistine, Borghese Gallery, Pantheon
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 20
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Tue
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Rome
+        </td>
+        <td class="py-4 px-5">
+         St Paul Outside the Walls, Catacombs, Appian Way
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 21
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Wed
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Praiano
+        </td>
+        <td class="py-4 px-5">
+         Train Rome &rarr; Naples,
+         <strong>
+          private driver Naples &rarr; Pompeii (tour) &rarr; Praiano
+         </strong>
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 22
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Thu
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Praiano
+        </td>
+        <td class="py-4 px-5">
+         <strong>
+          Path of the Gods
+         </strong>
+         hike early (Bomerano&rarr;Nocelle), afternoon beach
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 23
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Fri
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Praiano
+        </td>
+        <td class="py-4 px-5">
+         <strong>
+          Capri day trip
+         </strong>
+         : ferry Amalfi, Blue Grotto, Villa Jovis
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 24
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Sat
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Praiano
+        </td>
+        <td class="py-4 px-5">
+         Amalfi Duomo, Ravello Villa Rufolo, slow lunch
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 25
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Sun
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Praiano
+        </td>
+        <td class="py-4 px-5">
+         Positano beach, free afternoon, final honeymoon dinner
+        </td>
+       </tr>
+       <tr class="hover:bg-gold/5 transition">
+        <td class="py-4 px-5 font-medium">
+         July 26
+        </td>
+        <td class="py-4 px-3 text-forest/60">
+         Mon
+        </td>
+        <td class="py-4 px-5 font-cormorant text-[19px]">
+         Departure
+        </td>
+        <td class="py-4 px-5">
+         Morning coffee, transfer to NAP, flight home
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+   </div>
+   <!-- Notes -->
+   <div class="grid md:grid-cols-3 gap-6 mt-12">
+    <div class="md:col-span-2 bg-white border-gold/25 rounded-2xl p-6">
+     <h3 class="font-playfair text-xl mb-3">
+      Key Logistics
+     </h3>
+     <ul class="space-y-2.5 text-[15px] text-forest/85">
+      <li class="flex gap-3">
+       <span class="text-gold mt-0.5">
+        ✈
+       </span>
+       <span>
+        <strong>
+         Open-jaw flights:
+        </strong>
+        into Venice Marco Polo (VCE), out of Naples 
+International (NAP)
+       </span>
+      </li>
+      <li class="flex gap-3">
+       <span class="text-gold mt-0.5">
+        🚗
+       </span>
+       <span>
+        <strong>
+         Car rentals:
+        </strong>
+        (1) Ravenna FS Jul 10 09:00 &rarr; Florence Airport Jul 11 17:00; (2) Florence Airport Jul 14 07:00 &rarr; Orvieto FS Jul 15 18:00. No car in cities.
+       </span>
+      </li>
+      <li class="flex gap-3">
+       <span class="text-gold mt-0.5">
+        ⛪
+       </span>
+       <span>
+        <strong>
+         July in Rome:
+        </strong>
+        General Audience suspended; Sunday Angelus included July 18 
+at 12:00
+       </span>
+      </li>
+     </ul>
+    </div>
+    <div class="bg-forest text-ivory rounded-2xl p-6 flex flex-col justify-between">
+     <div>
+      <h3 class="font-cormorant text-2xl italic">
+       All major sites covered
+      </h3>
+      <p class="text-sm text-ivory/75 mt-2 leading-relaxed">
+       Venice, Bologna, Ravenna, San Marino, Florence, Pisa, Elba, Assisi, Orvieto, Rome, Naples, Pompeii, Amalfi, 
+Capri.
+      </p>
+     </div>
+     <div class="mt-6 text-xs uppercase tracking-widest text-gold">
+      21 days &bull; 2 travelers &bull; 1 honeymoon
+     </div>
+    </div>
+   </div>
+  </section>
+  <div class="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+   <div class="text-center md:text-left">
+    <p class="font-playfair text-2xl">
+     Jimmy &amp; Juliette
+    </p>
+    <p class="font-cormorant italic text-forest/70 mt-1">
+     La Luna di Miele &mdash; July 6&ndash;26, 2027
+    </p>
+   </div>
+   <div class="flex items-center gap-4 text-sm text-forest/60">
+    <span>
+     Venezia
+    </span>
+    <span class="text-gold">
+     &rarr;
+    </span>
+    <span>
+     Roma
+    </span>
+    <span class="text-gold">
+     &rarr;
+    </span>
+    <span>
+     Napoli
+    </span>
+   </div>
+  </div>
+  <script>
+   // Leaflet Map
+const stops = [
+{ name: "Venice", coords: [45.4408, 12.3155], date: "Jul 6-9" },
+{ name: "Bologna", coords: [44.4949, 11.3426], date: "Jul 9" },
+{ name: "Ravenna", coords: [44.4184, 12.2035], date: "Jul 9" },
+{ name: "Savignano sul Rubicone", coords: [44.0890, 12.3967], date: "Jul 10" },
+{ name: "San Marino", coords: [43.9333, 12.4473], date: "Jul 10" },
+{ name: "Florence", coords: [43.7696, 11.2558], date: "Jul 11-13" },
+{ name: "Pisa", coords: [43.7228, 10.3966], date: "Jul 14" },
+{ name: "Piombino", coords: [42.9254, 10.5259], date: "Jul 14-15 (park)" },
+{ name: "Portoferraio (Elba)", coords: [42.8075, 10.3280], date: "Jul 14-15" },
+{ name: "Assisi", coords: [43.0707, 12.6196], date: "Jul 15" },
+{ name: "Orvieto", coords: [42.7181, 12.1135], date: "Jul 15" },
+{ name: "Rome", coords: [41.9028, 12.4964], date: "Jul 16-21" },
+{ name: "Naples", coords: [40.8518, 14.2681], date: "Jul 21" },
+{ name: "Pompeii", coords: [40.7489, 14.4918], date: "Jul 21" },
+{ name: "Praiano (Amalfi Coast)", coords: [40.6476, 14.5349], date: "Jul 21-26" },
+{ name: "Capri", coords: [40.5509, 14.2222], date: "Jul 23" },
+];
+const map = L.map('map', { scrollWheelZoom: false, zoomControl: true }).setView([42.8, 12.5], 6);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+attribution: '&copy; OpenStreetMap &copy; CARTO',
+maxZoom: 19
+}).addTo(map);
+const goldIcon = (num) => L.divIcon({
+html: `<div 
+style="background:#C4A46A;color:#0F241C;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Inter;font-weight:600;font-size:12px;border:2px 
+solid #FFFCF5;box-shadow:0 2px 8px rgba(0,0,0,0.25)">${num}</div>`,
+className: '',
+iconSize: [28, 28],
+iconAnchor: [14, 14]
+});
+const latlngs = [];
+stops.forEach((stop, i) => {
+latlngs.push(stop.coords);
+const marker = L.marker(stop.coords, { icon: goldIcon(i+1) }).addTo(map);
+marker.bindPopup(`<div style="font-family:'Cormorant Garamond',serif;font-size:18px;margin-bottom:2px">${stop.name}</div><div 
+style="font-size:12px;color:#0F241C99">${stop.date}</div>`);
+});
+const polyline = L.polyline(latlngs, {
+color: '#C4A46A', weight: 3, opacity: 0.85, lineJoin: 'round', dashArray: '8 6', }).addTo(map); map.fitBounds(polyline.getBounds().pad(0.15));
+  </script>
+ </body>
 </html>
