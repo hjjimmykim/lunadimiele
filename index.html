@@ -411,22 +411,29 @@ Way.
          , drive to Savignano sul Rubicone (Rubicon), afternoon San Marino Three Towers
         </td>
        </tr>
-       <tr class="hover:bg-gold/5 transition">
+       <tr class="bg-[#E8F4EA] border-l-4 border-l-[#2E7D32] hover:bg-[#DFF0E3] transition">
         <td class="py-4 px-5 font-medium">
          July 11
         </td>
-        <td class="py-4 px-3 text-forest/60">
+        <td class="py-4 px-3 text-forest/70 font-semibold">
          Sun
         </td>
-        <td class="py-4 px-5 font-cormorant text-[19px]">
+        <td class="py-4 px-5 font-cormorant text-[19px] font-semibold">
          Florence
         </td>
         <td class="py-4 px-5">
-         Drive via Apennines,
-         <strong>
-          drop car Florence Airport 17:00
-         </strong>
-         , Duomo sunset
+         <span class="inline-flex items-center gap-2 font-medium">
+          <span class="w-2 h-2 rounded-full bg-[#2E7D32]">
+          </span>
+          Drive via Apennines,
+          <strong>
+           drop car Florence Airport ~15:00
+          </strong>
+          , check in, arrive Duomo by 17:00,
+          <span class="text-[#2E7D32] uppercase tracking-wide text-[12px] font-semibold">
+           MASS 18:00
+          </span>
+         </span>
         </td>
        </tr>
        <tr class="hover:bg-gold/5 transition">
@@ -581,13 +588,14 @@ Way.
          Wed
         </td>
         <td class="py-4 px-5 font-cormorant text-[19px]">
-         Praiano
+         Naples
         </td>
         <td class="py-4 px-5">
-         Train Rome &rarr; Naples,
+         Train Rome &rarr; Naples, check in,
          <strong>
-          private driver Naples &rarr; Pompeii (tour) &rarr; Praiano
+          Museo Archeologico Nazionale di Napoli
          </strong>
+         , Sansevero Chapel Museum
         </td>
        </tr>
        <tr class="hover:bg-gold/5 transition">
@@ -598,13 +606,13 @@ Way.
          Thu
         </td>
         <td class="py-4 px-5 font-cormorant text-[19px]">
-         Praiano
+         Naples
         </td>
         <td class="py-4 px-5">
          <strong>
-          Path of the Gods
+          Capri day trip
          </strong>
-         hike early (Bomerano&rarr;Nocelle), afternoon beach
+         : ferry early, Blue Grotto (morning), Villa Jovis, Gardens of Augustus
         </td>
        </tr>
        <tr class="hover:bg-gold/5 transition">
@@ -618,10 +626,11 @@ Way.
          Praiano
         </td>
         <td class="py-4 px-5">
+         Train Naples &rarr; Pompeii,
          <strong>
-          Capri day trip
+          Pompeii tour
          </strong>
-         : ferry Amalfi, Blue Grotto, Villa Jovis
+         , private driver to Praiano, check in
         </td>
        </tr>
        <tr class="hover:bg-gold/5 transition">
@@ -635,21 +644,32 @@ Way.
          Praiano
         </td>
         <td class="py-4 px-5">
-         Amalfi Duomo, Ravello Villa Rufolo, slow lunch
+         <strong>
+          Path of the Gods
+         </strong>
+         hike early (Bomerano&rarr;Nocelle), afternoon beach
         </td>
        </tr>
-       <tr class="hover:bg-gold/5 transition">
+       <tr class="bg-[#E8F4EA] border-l-4 border-l-[#2E7D32] hover:bg-[#DFF0E3] transition">
         <td class="py-4 px-5 font-medium">
          July 25
         </td>
-        <td class="py-4 px-3 text-forest/60">
+        <td class="py-4 px-3 text-forest/70 font-semibold">
          Sun
         </td>
-        <td class="py-4 px-5 font-cormorant text-[19px]">
+        <td class="py-4 px-5 font-cormorant text-[19px] font-semibold">
          Praiano
         </td>
         <td class="py-4 px-5">
-         Positano beach, free afternoon, final honeymoon dinner
+         <span class="inline-flex items-center gap-2 font-medium">
+          <span class="w-2 h-2 rounded-full bg-[#2E7D32]">
+          </span>
+          <span class="text-[#2E7D32] uppercase tracking-wide text-[12px] font-semibold">
+           MASS
+          </span>
+          at Cathedral of St Andrew Apostle in Amalfi,
+         </span>
+         Ravello Villa Rufolo, slow lunch, final honeymoon dinner
         </td>
        </tr>
        <tr class="hover:bg-gold/5 transition">
@@ -772,10 +792,10 @@ const stops = [
 { name: "Assisi", coords: [43.0707, 12.6196], date: "Jul 15" },
 { name: "Orvieto", coords: [42.7181, 12.1135], date: "Jul 15" },
 { name: "Rome", coords: [41.9028, 12.4964], date: "Jul 16-21" },
-{ name: "Naples", coords: [40.8518, 14.2681], date: "Jul 21" },
-{ name: "Pompeii", coords: [40.7489, 14.4918], date: "Jul 21" },
-{ name: "Praiano (Amalfi Coast)", coords: [40.6476, 14.5349], date: "Jul 21-26" },
-{ name: "Capri", coords: [40.5509, 14.2222], date: "Jul 23" },
+{ name: "Naples", coords: [40.8518, 14.2681], date: "Jul 21-22" },
+{ name: "Pompeii", coords: [40.7489, 14.4918], date: "Jul 23" },
+{ name: "Praiano (Amalfi Coast)", coords: [40.6476, 14.5349], date: "Jul 23-26" },
+{ name: "Capri", coords: [40.5509, 14.2222], date: "Jul 22" },
 ];
 const map = L.map('map', { scrollWheelZoom: false, zoomControl: true }).setView([42.8, 12.5], 6);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
